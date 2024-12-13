@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: my-flask-api
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:8080"
+    envVars:
+      - key: DATABASE_URL
+        value: "postgres://<user>:<password>@<host>:<port>/<database>"
+    plan: free
+    regions: "us"
