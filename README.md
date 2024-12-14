@@ -1,97 +1,96 @@
-Deploy app to render
+# Deploy-app-to-render
 
-```markdown
-# Flask API Deployment to Render
+Цей проєкт представляє простий API, який розгорнуто на платформі Render. Він використовує базу даних PostgreSQL для зберігання даних про продукти. Основна мета — надати зручний інтерфейс для роботи з продуктами через HTTP-запити.
 
-Цей проект є Flask API, який розгортається на платформі **Render**. API працює з базою даних PostgreSQL, яка налаштована через середовище змінних.
+---
 
-## Структура проекту
+## Інструкції з розгортання
 
-Проект має таку структуру:
+### Клонування репозиторію
 
-```
-my-flask-api/
-│
-├── app.py           # Основний код для Flask API
-├── requirements.txt # Список залежностей Python
-├── Dockerfile       # Файл для створення Docker-образу
-├── render.yaml      # Налаштування для деплою на Render
-├── Procfile         # Файл для запуску додатку на Render
-└── .env             # Локальні змінні середовища (для налаштувань бази даних)
-```
-
-## Технології
-
-- **Flask**: Мікрофреймворк для створення веб-додатків на Python.
-- **SQLAlchemy**: ORM для роботи з базами даних.
-- **PostgreSQL**: Система управління реляційними базами даних.
-- **Render**: Платформа для хостингу веб-додатків та API.
-
-## Налаштування
-
-1. **Клонуйте репозиторій**:
-
-   ```bash
-   git clone https://github.com/yourusername/my-flask-api.git
-   cd my-flask-api
-   ```
-
-2. **Налаштуйте змінні середовища**:
-
-   Створіть файл `.env` у кореневій директорії та додайте такі змінні:
-
-   ```
-   DATABASE_URL=postgres://<user>:<password>@<host>:<port>/<database>
-   ```
-
-3. **Встановіть залежності**:
-
-   Якщо ви хочете запустити додаток локально, створіть віртуальне середовище та встановіть залежності:
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Для Linux/Mac
-   venv\Scripts\activate     # Для Windows
-   pip install -r requirements.txt
-   ```
-
-4. **Запуск додатку локально**:
-
-   Для локального запуску:
-
-   ```bash
-   python app.py
-   ```
-
-   Додаток буде доступний за адресою: `http://127.0.0.1:8080`.
-
-## Деплой на Render
-
-1. **Створіть репозиторій на Render**:
-
-   Перейдіть на [Render](https://render.com) і створіть новий **Web Service**.
-
-2. **Налаштуйте Render**:
-
-   - Підключіть свій репозиторій до Render.
-   - Вказуйте команду для збірки (`pip install -r requirements.txt`) та запуску (`gunicorn app:app --bind 0.0.0.0:8080`).
-   - У файлі `render.yaml` вказується URL для підключення до вашої бази даних через змінну середовища `DATABASE_URL`.
-
-3. **Запуск на Render**:
-
-   Після налаштування ви можете деплоїти ваш додаток на Render, і він буде доступний через URL, наприклад:
-
-   ```
-   https://your-app-name.onrender.com
-   ```
-
-## Тестування API
-
-Для тестування API після деплою на Render використовуйте cURL-запит:
+Спершу скопіюйте репозиторій у вашу локальну директорію за допомогою команди:
 
 ```bash
-curl 'https://your-app-name.onrender.com/api/v1/products' \
-  -X 'GET' \
-  -H 'Content-Type: application/json'
+git clone https://github.com/yourusername/your-repo.git
+cd your-repo
 ```
+
+---
+
+### Налаштування змінних середовища
+
+Створіть файл `.env` у кореневій папці проєкту та вкажіть у ньому URL вашої бази даних у такому форматі:
+
+```env
+DATABASE_URL=postgres://username:password@hostname:port/dbname
+```
+
+Пояснення полів:
+- **username** — Ім’я користувача бази даних.
+- **password** — Пароль для доступу до бази даних.
+- **hostname** — Адреса сервера бази даних.
+- **port** — Номер порту.
+- **dbname** — Назва бази даних.
+
+Ці параметри будуть надані хостинговою платформою Render або іншим сервісом.
+
+---
+
+### Розгортання на Render
+
+1. Зареєструйтесь або увійдіть до акаунта на [Render](https://render.com/).
+2. Перейдіть до розділу "Web Services" та натисніть `New Web Service`.
+3. Виберіть репозиторій вашого проєкту з підключеного GitHub акаунта.
+4. Налаштуйте змінні середовища, наприклад, додайте `DATABASE_URL` у розділі `Environment Variables`.
+5. Запустіть процес розгортання, натиснувши кнопку `Deploy`.
+
+Після завершення Render надасть вам URL для доступу до вашого API.
+
+---
+
+## Як використовувати API
+
+### Основний URL API
+
+Ваш API буде доступний за посиланням:
+```
+https://your-render-app-url.com/api/v1
+```
+
+---
+
+### Приклад запиту
+
+Ендпоінт для отримання списку продуктів:
+- **URL**: `/api/v1/productentitiestool-ui-admin/partner/getAll`
+- **Метод**: `POST`
+
+**Приклад запиту через cURL**:
+
+```bash
+curl 'https://your-render-app-url.com/api/v1/productentitiestool-ui-admin/partner/getAll' \
+  -X 'POST' \
+  -H 'sec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"' \
+  -H 'pragma: no-cache' \
+  -H 'z-currency: USD' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36' \
+  -H 'content-type: application/json' \
+  -H 'cache-control: no-cache' \
+  -H 'Referer: https://admin.spaceship.net/' \
+  -H 'z-lang: en-US' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -d '{
+    "filters": {},
+    "pagination": {
+      "page": 1,
+      "pageSize": 10
+    }
+  }'
+```
+
+Не забудьте замінити `your-render-app-url.com` на реальну адресу вашого API.
+
+---
+
 
